@@ -19,6 +19,25 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 
+import easyocr
+import cv2
+
+reader = easyocr.Reader(['en'], gpu = True)
+
+def perform_ocr_on_image(img, coordinates):
+    x, y, w, h = map(int, coordinates)
+    cropped_img = img[y:h,x:w]
+
+    gray_img = cv2.cvtColor(cropped_img, cv2.COLOR_RGB2GRAY)
+    results = reader.readtext(gray_img)
+
+    text = ""
+    for res in results:
+        if len(results) == 1 or (len(res[1]) > 6 and res[2] > 0.2):
+            text = res[1]
+    
+    return str(text)
+
 
 @smart_inference_mode()
 def run(
@@ -140,6 +159,10 @@ def run(
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
+
+                        text_ocr = perform_ocr_on_image(im0, xyxy)
+                        label = text_ocr
+                        
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
