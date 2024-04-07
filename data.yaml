@@ -1,0 +1,7 @@
+path : /content/data/
+train : images/train
+val : images/test
+
+# Classes
+names :
+  0 : license plate
