@@ -82,7 +82,9 @@ def run(
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Load model
-    device = ', '.join(device) if isinstance(device, list) else device  # Convert list to string
+    # Memastikan device merupakan objek torch.device
+    device = torch.device(device) if isinstance(device, str) else device
+
     model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
     stride, names, pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
