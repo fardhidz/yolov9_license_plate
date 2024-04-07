@@ -35,7 +35,7 @@ def perform_ocr_on_image(img, coordinates):
     for res in results:
         if len(results) == 1 or (len(res[1]) > 6 and res[2] > 0.2):
             text = res[1]
-    
+
     return str(text)
 
 
@@ -115,6 +115,7 @@ def run(
         with dt[1]:
             visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
             pred = model(im, augment=augment, visualize=visualize)
+            pred = pred[0][1]
 
         # NMS
         with dt[2]:
@@ -161,7 +162,7 @@ def run(
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
 
                         text_ocr = perform_ocr_on_image(im0, xyxy)
-                        label = text_ocr
+                        label = text_ocr 
                         
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
