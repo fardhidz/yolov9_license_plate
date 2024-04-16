@@ -41,7 +41,7 @@ def perform_ocr_on_image(img, coordinates):
 
 @smart_inference_mode()
 def run(
-        weights=ROOT / 'content/yolov9/runs/train/yolov9-c/weights/best.pt',  # model path or triton URL
+        weights=ROOT / 'yolov9-c/weights/best.pt',  # model path or triton URL
         source=ROOT / 'Data Test',  # file/dir/URL/glob/screen/0(webcam)
         data=ROOT / 'yolov9_license_plate/data.yaml',  # dataset.yaml path
         imgsz=(640, 640),  # inference size (height, width)
