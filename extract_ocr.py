@@ -43,7 +43,7 @@ def perform_ocr_on_image(img, coordinates):
 def run(
         weights=ROOT / 'yolov9-c/weights/best.pt',  # model path or triton URL
         source=ROOT / 'Data Test',  # file/dir/URL/glob/screen/0(webcam)
-        data=ROOT / 'yolov9_license_plate/data.yaml',  # dataset.yaml path
+        data=ROOT / 'data.yaml',  # dataset.yaml path
         imgsz=(640, 640),  # inference size (height, width)
         conf_thres=0.25,  # confidence threshold
         iou_thres=0.45,  # NMS IOU threshold
@@ -214,7 +214,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'yolov9-c/weights/best.pt', help='model path or triton URL')
     parser.add_argument('--source', type=str, default=ROOT / 'Data Test', help='file/dir/URL/glob/screen/0(webcam)')
-    parser.add_argument('--data', type=str, default=ROOT / 'yolov9_license_plate/data.yaml', help='(optional) dataset.yaml path')
+    parser.add_argument('--data', type=str, default=ROOT / 'data.yaml', help='(optional) dataset.yaml path')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='NMS IoU threshold')
